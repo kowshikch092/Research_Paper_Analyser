@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Home - AI Paper Reviewer{% endblock %}
+
+{% block content %}
+<div class="hero-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">AI-Powered Research Paper Analysis</h1>
+                <p class="lead mb-4">Upload your research paper and get instant quality analysis, novelty detection, and improvement suggestions.</p>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="border border-2 border-dashed rounded-3 p-5 text-center" id="dropZone">
+                        <i class="bi bi-cloud-upload display-1 text-primary"></i>
+                        <h4 class="mt-3">Drag & Drop your PDF here</h4>
+                        <p class="text-muted">or</p>
+                        <button class="btn btn-primary btn-lg" onclick="document.getElementById('fileInput').click()">
+                            <i class="bi bi-file-pdf"></i> Browse Files
+                        </button>
+                        <input type="file" id="fileInput" class="d-none" accept=".pdf">
+                        <p class="mt-3 small text-muted">Maximum file size: 16MB</p>
+                    </div>
+                </div>
+
+                <div class="mt-4" id="analysisProgress" style="display: none;">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0%</div>
+                    </div>
+                    <p class="text-center mt-2" id="progressMessage">Starting analysis...</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="feature-grid">
+                    <div class="feature-card p-4 mb-3">
+                        <i class="bi bi-check-circle-fill text-success fs-1"></i>
+                        <h5>Section Validation</h5>
+                        <p>Detect missing or weak sections in your paper</p>
+                    </div>
+                    <div class="feature-card p-4 mb-3">
+                        <i class="bi bi-graph-up-arrow text-primary fs-1"></i>
+                        <h5>Novelty Detection</h5>
+                        <p>Compare against corpus using SciBERT</p>
+                    </div>
+                    <div class="feature-card p-4 mb-3">
+                        <i class="bi bi-pencil-square text-warning fs-1"></i>
+                        <h5>Writing Quality</h5>
+                        <p>Readability, grammar, and style analysis</p>
+                    </div>
+                    <div class="feature-card p-4 mb-3">
+                        <i class="bi bi-download text-info fs-1"></i>
+                        <h5>PDF Reports</h5>
+                        <p>Download detailed analysis reports</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadArea = document.getElementById('uploadArea');
+    const progressDiv = document.getElementById('analysisProgress');
+    const progressBar = progressDiv.querySelector('.progress-bar');
+    const progressMessage = document.getElementById('progressMessage');
+
+    // Drag and drop handlers
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-primary');
+    });
+
+    dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-primary');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-primary');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+        }
+    });
+
+    async function handleFileUpload(file) {
+        if (file.type !== 'application/pdf') {
+            alert('Please upload a PDF file');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // Show progress
+        uploadArea.style.display = 'none';
+        progressDiv.style.display = 'block';
+        
+        // Simulate progress
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 5;
+            if (progress <= 90) {
+                progressBar.style.width = progress + '%';
+                progressBar.textContent = progress + '%';
+            }
+        }, 500);
+
+        try {
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            });
+
+            clearInterval(interval);
+            
+            if (!response.ok) {
+                throw new Error('Analysis failed');
+            }
+
+            const data = await response.json();
+            
+            if (data.success) {
+                progressBar.style.width = '100%';
+                progressBar.textContent = '100%';
+                progressMessage.textContent = 'Analysis complete! Redirecting...';
+                
+                setTimeout(() => {
+                    window.location.href = `/report/${data.analysis_id}`;
+                }, 1000);
+            } else {
+                throw new Error(data.error || 'Analysis failed');
+            }
+        } catch (error) {
+            clearInterval(interval);
+            progressDiv.style.display = 'none';
+            uploadArea.style.display = 'block';
+            alert('Error: ' + error.message);
+        }
+    }
+});
+</script>
+{% endblock %}

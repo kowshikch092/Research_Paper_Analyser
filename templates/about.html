@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}About - AI Research Paper Review{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">About This Application</h2>
+                </div>
+                <div class="card-body">
+                    <h4>AI-Powered Research Paper Analysis Tool</h4>
+                    <p>This application provides comprehensive analysis of research papers using advanced AI techniques to evaluate:</p>
+                    <ul>
+                        <li><strong>Writing Quality:</strong> Grammar, readability, and style analysis</li>
+                        <li><strong>Section Structure:</strong> Completeness and organization of paper sections</li>
+                        <li><strong>Novelty Assessment:</strong> Comparison against existing corpus using SciBERT embeddings</li>
+                        <li><strong>Overall Quality Scores:</strong> Aggregated metrics for paper evaluation</li>
+                    </ul>
+                    
+                    <h5>Features:</h5>
+                    <ul>
+                        <li>PDF upload and text extraction</li>
+                        <li>Automated section detection</li>
+                        <li>Real-time analysis progress</li>
+                        <li>Downloadable PDF reports</li>
+                        <li>Analysis history tracking</li>
+                    </ul>
+                    
+                    <h5>Technology Stack:</h5>
+                    <ul>
+                        <li>Flask web framework</li>
+                        <li>PyMuPDF for PDF processing</li>
+                        <li>SpaCy and NLTK for NLP</li>
+                        <li>Sentence Transformers for embeddings</li>
+                        <li>FPDF for report generation</li>
+                    </ul>
+                    
+                    <div class="alert alert-info">
+                        <strong>Note:</strong> This tool is designed for research purposes and should be used as a supplementary analysis tool alongside expert human review.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

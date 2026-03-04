@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}Analysis History - AI Research Paper Review{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Analysis History</h2>
+                <form method="POST" action="{{ url_for('clear_history') }}" onsubmit="return confirm('Are you sure you want to clear all history?')">
+                    <button type="submit" class="btn btn-danger">Clear History</button>
+                </form>
+            </div>
+            
+            {% if history %}
+                <div class="row">
+                    {% for entry in history %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">{{ entry.filename }}</h5>
+                                <small class="text-muted">{{ entry.timestamp }}</small>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    {% for key, value in entry.scores.items() %}
+                                    <div class="col-6">
+                                        <strong>{{ key.replace('_', ' ').title() }}:</strong> {{ value }}/100
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="mt-3">
+                                    <a href="{{ url_for('view_report', analysis_id=entry.id) }}" class="btn btn-primary btn-sm">View Report</a>
+                                    <a href="{{ url_for('download_report', analysis_id=entry.id) }}" class="btn btn-success btn-sm">Download PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <h4>No analysis history yet</h4>
+                    <p>Upload and analyze your first research paper to see results here.</p>
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Start Analyzing</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add confirmation for clear history
+    const clearBtn = document.querySelector('button[type="submit"]');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function(e) {
+            if (!confirm('Are you sure you want to clear all analysis history? This action cannot be undone.')) {
+                e.preventDefault();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

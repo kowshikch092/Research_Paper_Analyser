@@ -1,0 +1,74 @@
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# ==============================
+# VS Code
+# ==============================
+.vscode/
+*.code-workspace
+
+# ==============================
+# Environment variables
+# ==============================
+.env
+.env.*
+
+# ==============================
+# Logs
+# ==============================
+*.log
+
+# ==============================
+# OS Files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# Project-specific (optional)
+# ==============================
+
+# Ignore generated reports
+reports/*
+
+# Ignore large datasets
+data/*
+
+# Ignore temporary images (if generated)
+images/*
+
+# Keep folders but ignore contents (optional)
+# If you want to keep folder structure:
+# !reports/.gitkeep
+# !data/.gitkeep
+# !images/.gitkeep

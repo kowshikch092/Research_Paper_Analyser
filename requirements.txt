@@ -1,0 +1,18 @@
+pymupdf
+pymupdf4llm
+nltk
+textstat
+spacy==3.7.4
+language-tool-python
+sentence-transformers
+numpy
+scikit-learn
+torch
+torchvision
+transformers
+flask
+werkzeug
+markdown
+fpdf
+#python -m spacy download en_core_web_sm
+
