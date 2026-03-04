@@ -62,7 +62,7 @@ Thumbs.db
 reports/*
 
 # Ignore large datasets
-data/*
+
 
 # Ignore temporary images (if generated)
 images/*
@@ -71,4 +71,4 @@ images/*
 # If you want to keep folder structure:
 # !reports/.gitkeep
 # !data/.gitkeep
-# !images/.gitkeep
+# !images/.gitkeep  
