@@ -19,4 +19,3 @@ transformers==4.36.2
 sentence-transformers==2.2.2
 
 spacy==3.7.2
-en-core-web-sm==3.7.1
