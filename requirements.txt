@@ -8,14 +8,11 @@ pymupdf
 pymupdf4llm
 nltk
 textstat
-language-tool-python
-
 numpy==1.26.4
 scikit-learn==1.3.2
 
 torch==2.1.2
-torchvision==0.16.2
 transformers==4.36.2
-sentence-transformers==2.2.2
+
 
 spacy==3.7.2
