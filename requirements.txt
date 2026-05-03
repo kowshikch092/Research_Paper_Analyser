@@ -1,18 +1,23 @@
+flask
+gunicorn
+werkzeug
+markdown
+fpdf
+
 pymupdf
 pymupdf4llm
 nltk
 textstat
-spacy==3.7.4
 language-tool-python
-sentence-transformers
-numpy
-scikit-learn
-torch
-torchvision
-transformers
-flask
-werkzeug
-markdown
-fpdf
+
+numpy==1.26.4
+scikit-learn==1.3.2
+
+torch==2.1.2
+torchvision==0.16.2
+transformers==4.36.2
+sentence-transformers==2.2.2
+
+spacy==3.7.2
 #python -m spacy download en_core_web_sm
 
